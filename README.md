@@ -13,3 +13,6 @@
 ├── .env # Environment variables (for JWT secret, etc.)
 ├── server.js # Main entry point for the app
 └── package.json # Project dependencies
+
+Deployed API Url 
+https://ecommerce-15xo.onrender.com
