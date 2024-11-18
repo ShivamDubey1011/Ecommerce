@@ -4,7 +4,6 @@ const { generateToken } = require("../utils/jwtUtils");
 
 const registerUser = async (name, email, password) => {
   try {
-    // const { name, email, password } = req.body;
     let user = await User.findOne({ email });
     if (user) {
       throw new Error("User already exists");
@@ -35,12 +34,26 @@ const login = async (email, password) => {
     if (!isMatch) {
       throw new Error("Invalid credentials");
     }
-    const token = generateToken(user.id);
+    const token = generateToken(user.id, user.email);
     return token;
   } catch (err) {
     console.error(err);
-    throw error;
+    throw err;
   }
 };
 
-module.exports = { registerUser, login };
+const changePassword = async (email, password, newPassword) => {
+  try {
+    const user = await User.findOne({ email });
+    const isPasswordMatch = await bcrypt.compare(password, user.password);
+    if (!isPasswordMatch) throw new Error("Invalid credentials");
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(newPassword, salt);
+    await user.save();
+  } catch (err) {
+    console.error("failed");
+    throw err;
+  }
+};
+
+module.exports = { registerUser, login, changePassword };

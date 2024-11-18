@@ -4,6 +4,7 @@ const {
   registerUser,
   loginUser,
   getUserInfo,
+  changePassword,
 } = require("../controllers/authController");
 const authMiddleware = require("../middlewares/authMiddleware");
 
@@ -13,7 +14,9 @@ router.post("/register", registerUser);
 // POST /login - User Login
 router.post("/login", loginUser);
 
+router.post("/resetPassword", changePassword);
+
 // GET /me - Get User Info (Protected)
-router.get("/me", authMiddleware, getUserInfo);
+// router.get("/profile", authMiddleware, getUserInfo);
 
 module.exports = router;
