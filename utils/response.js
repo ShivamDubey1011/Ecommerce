@@ -1,11 +1,9 @@
-// utils/response.js
-
 const successResponse = (message, data) => {
-  return { success: true, message, data };
+  return { statusCode: 200, message, data };
 };
 
 const errorResponse = (message, error) => {
-  return { success: false, message, error };
+  return { statusCode: 400, message, error };
 };
 
 module.exports = { successResponse, errorResponse };
